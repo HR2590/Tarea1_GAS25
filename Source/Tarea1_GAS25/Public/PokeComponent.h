@@ -39,22 +39,20 @@ protected:
 	FPokeElementsRelationRow* GetPokeElementRow(const UDataTable* InDataTable,const FGameplayTag& InElementTagToFind) const;
 	FPokeAttributeRow* GetPokeAttributeRow(const UDataTable* InDataTable,const FGameplayTag& InElementTagToFind) const;
 	FPokeAttackRow* GetPokeAttackRow(const UDataTable* InDataTable,const FGameplayTag& InAttackNameToFind) const;
-
+	
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,meta=(AllowPrivateAccess=true))FGameplayTag PokeClassTag;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,meta=(AllowPrivateAccess=true))UDataTable* PokemonData;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,meta=(AllowPrivateAccess=true))UDataTable* AttacksData;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,meta=(AllowPrivateAccess=true))UDataTable* MultiplierData;
 public:
-	
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)FGameplayTag PokeClassTag;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)UDataTable* PokemonData;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)UDataTable* AttacksData;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)UDataTable* MultiplierData;
-	
 	UFUNCTION(BlueprintCallable)void InitializePokemon();
 	UFUNCTION(BlueprintCallable)void InitializePokemonAttributes();
 	UFUNCTION(BlueprintCallable)void InitializeElementAttributes();
 	UFUNCTION(BlueprintCallable)void InitializeAttacksAttributes();
 	
-	UFUNCTION(BlueprintCallable)FPokeAttributeRow& GetPokemonAttributes();
+	UFUNCTION(BlueprintCallable)FPokeAttributeRow& GetPokemonAttributes() const;
 	UFUNCTION(BlueprintCallable)FPokeAttackRow GetAttackAttributes(int InIndex);
 	UFUNCTION(BlueprintCallable)FPokeElementsRelationRow GetMultiplierAttributes(const bool InSelection) const;
-	
+
 	virtual void BeginPlay() override;
 };

@@ -21,9 +21,6 @@ class TAREA1_GAS25_API IGameplayTagCustomInterface:public IGameplayTagAssetInter
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	UFUNCTION(BlueprintCallable,Category="GameplayTags")
-	virtual void AddTag(const FGameplayTag& InTag)=0;
-
-	UFUNCTION(BlueprintCallable,Category="GameplayTags")
-	virtual void RemoveTag(const FGameplayTag& InTag)=0;
+	UFUNCTION(BlueprintCallable,Category="GameplayTags")virtual void AddTag(const FGameplayTag& InTag)=0;
+	UFUNCTION(BlueprintCallable,Category="GameplayTags")virtual void RemoveTag(const FGameplayTag& InTag)=0;
 };

@@ -15,7 +15,6 @@ if (InDataTable){\
 			if (Attr) { return *Attr; }}};return nullptr;\
 
 
-
 void UPokeComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -79,8 +78,7 @@ void UPokeComponent::InitializeAttacksAttributes()
 }
 
 
-
-FPokeAttributeRow& UPokeComponent::GetPokemonAttributes()
+FPokeAttributeRow& UPokeComponent::GetPokemonAttributes() const
 {
 		return Attributes?*Attributes:*(new FPokeAttributeRow());
 	
@@ -99,5 +97,6 @@ FPokeElementsRelationRow UPokeComponent::GetMultiplierAttributes(const bool InSe
 	if(!SecondElementAttributes&&InSelection) return FPokeElementsRelationRow();
 	return InSelection?*SecondElementAttributes:*FirstElementAttributes;
 }
+
 
 

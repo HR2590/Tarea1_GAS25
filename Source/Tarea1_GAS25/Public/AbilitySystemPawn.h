@@ -32,19 +32,13 @@ class TAREA1_GAS25_API UAbilitySystemPawn : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
 	FCharacterAttributes* Attributes;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,meta=(AllowPrivateAccess=true)) FGameplayTag ClassTag;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite,meta=(AllowPrivateAccess=true))UDataTable* CharacterData;
 public:
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	FGameplayTag ClassTag;
-
-
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	UDataTable* CharacterData;
-
 	void InitializeCharacter();
 	// Sets default values for this component's properties
 	virtual void InitAbilityActorInfo(AActor* InOwnerActor, AActor* InAvatarActor) override;
-	UFUNCTION(BlueprintCallable)
-	FCharacterAttributes GetAttributes() const;
+	UFUNCTION(BlueprintCallable)FCharacterAttributes GetAttributes() const;
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

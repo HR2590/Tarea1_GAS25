@@ -63,20 +63,36 @@ APokemonClass::APokemonClass()
 	SpawnAttackLocation->SetupAttachment(RootComponent);
 }
 
+
+void APokemonClass::AddMappingContext() const
+{
+	if (const APlayerController* PlayerController=Cast<APlayerController>(GetController()))
+	{
+		if (UEnhancedInputLocalPlayerSubsystem* InputSystem=ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		{
+			InputSystem->AddMappingContext(DefaultMappingContext,0);
+		}
+	}
+}
+
+
+void APokemonClass::BeginPlay()
+{
+	Super::BeginPlay();
+	AddMappingContext();
+}
+
 void APokemonClass::Attack(const int InIndex)
 {
 	const int Index=FMath::Clamp(InIndex,0,3);
 	if(!AbilityComponent)return;
 	if(AbilityComponent->GetAttackAttributes(Index).NumberOfUses>0)
 	{
-		
-		AbilityComponent->GetAttackAttributes(Index).
-		Attack->GetDefaultObject<UPokeAttackBase>()->
+		AbilityComponent->GetAttackAttributes(Index).Attack->GetDefaultObject<UPokeAttackBase>()->
 		Attack(SpawnAttackLocation->GetComponentTransform(),GetWorld(),
 			AbilityComponent->GetAttackAttributes(Index).PrimaryElement,
 			AbilityComponent->GetAttackAttributes(Index).Damage);
 	}
-		
 	
 }
 
@@ -99,32 +115,12 @@ void APokemonClass::ReceiveDamage(const FGameplayTag& AttackElement, const float
 	OnUpdateHealthHUD(CurrentHealth);
 }
 
-void APokemonClass::AddMappingContext() const
-{
-	if (const APlayerController* PlayerController=Cast<APlayerController>(GetController()))
-	{
-		if (UEnhancedInputLocalPlayerSubsystem* InputSystem=ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
-		{
-			InputSystem->AddMappingContext(DefaultMappingContext,0);
-		}
-	}
-}
-
-
-
-void APokemonClass::BeginPlay()
-{
-	Super::BeginPlay();
-	AddMappingContext();
-}
-
-
-
 void APokemonClass::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	if (UEnhancedInputComponent* EnhancedInputComponent=Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
+	
 		EnhancedInputComponent->BindAction(Attack1Input,ETriggerEvent::Started,this,&ThisClass::Attack,0);
 		EnhancedInputComponent->BindAction(Attack2Input,ETriggerEvent::Started,this,&ThisClass::Attack,1);
 		EnhancedInputComponent->BindAction(Attack3Input,ETriggerEvent::Started,this,&ThisClass::Attack,2);
